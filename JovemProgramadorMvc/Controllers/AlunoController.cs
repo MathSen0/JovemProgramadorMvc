@@ -16,6 +16,18 @@ namespace JovemProgramadorMvc.Controllers
         {
             return View();
         }
+        public IActionResult Adicionar()
+        {
+            return View();
+        }
+        public IActionResult Mensagem()
+        {
+            return View();
+        }
+        public IActionResult BuscarCep(string cep)
+        {
+            return View();
+        }
     }
 }
         
