@@ -25,7 +25,7 @@
                 <td>(47) 99208-8572</td>
                 <td>contato.theusp@gmail.com</td>
                 <td>88353-529</td>
-                <td><button type="button" class="btn-outline-primary">Endereço</button></td>
+                <td><button type="button" asp-controller="Aluno" asp-action="Buscacep" asp-route="" class="btn-outline-primary">Endereço</button></td>
             </tr>
             <tr>
                 <th scope="row">2</th>
@@ -51,7 +51,7 @@
     </table>
 
         <div class="text-center">
-            <button class="btn btn-primary" type="button">Adicionar novo Aluno</button>
+            <a class="btn btn-primary" type="button"asp-controller="Aluno" asp-action="Adicionar">Adicionar novo Aluno</a>
         </div>
 
     </div>
