@@ -1,16 +1,25 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using JovemProgramadorMvc.Models;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using System.Text.Json;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+
 
 namespace JovemProgramadorMvc.Controllers
 {
     public class AlunoController : Controller 
     {
-        public AlunoController()
+        private readonly IConfiguration _configuration;
+        
+        
+        public AlunoController(IConfiguration configuration)
         {
-
+            _configuration = configuration;
         }
         public IActionResult Index()
         {
@@ -24,9 +33,42 @@ namespace JovemProgramadorMvc.Controllers
         {
             return View();
         }
-        public IActionResult BuscarCep(string cep)
+        public async Task<IActionResult> BuscarCep(string cep)
         {
-            return View();
+            EnderecoModel enderecoModel = new();
+
+            try
+            {
+                cep = cep.Replace("-", "");
+
+                using var client = new HttpClient();
+                var result = await client.GetAsync(_configuration.GetSection("ApiCep")["BaseUrl"] + cep + "/json");
+                if(result.IsSuccessStatusCode)
+                {
+                    enderecoModel = JsonSerializer.Deserialize<EnderecoModel> (
+                        await result.Content.ReadAsStringAsync(), new JsonSerializerOptions() { });
+                    if (enderecoModel.complemento == "")
+                    {
+                        enderecoModel.complemento = "Sem complemento";
+                    }
+                    
+                    if (Regex.IsMatch(cep,(@"000")) == true)
+                    {
+                        enderecoModel.logradouro = "CEP geral de " + enderecoModel.localidade;
+                        enderecoModel.bairro = "Não especificado";
+                    }
+                }
+                else
+                {
+                    
+                }
+            }
+            catch (Exception e)
+            {
+
+            }
+            
+            return View("Buscarcep", enderecoModel);
         }
     }
 }

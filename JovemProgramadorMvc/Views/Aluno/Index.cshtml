@@ -1,4 +1,11 @@
-﻿<div class="text-left">
+﻿@if(ViewData["Mensagem"] != null)
+            {
+                <div class="alert-danger">
+                    @ViewData["Mensagem"]
+                </div>
+            }
+
+<div class="text-left">
 
     <div>
         <h1>Dados dos Alunos</h1>
@@ -12,8 +19,7 @@
                 <th scope="col">Contato</th>
                 <th scope="col">E-mail</th>
                 <th scope="col">CEP</th>
-               
-                @*<th><button type="button" class="btn btn-primary">Endereço</button></th>*@
+              
 
             </tr>
         </thead>
@@ -25,7 +31,11 @@
                 <td>(47) 99208-8572</td>
                 <td>contato.theusp@gmail.com</td>
                 <td>88353-529</td>
-                <td><button type="button" asp-controller="Aluno" asp-action="Buscacep" asp-route="" class="btn-outline-primary">Endereço</button></td>
+                <td>
+                <div>
+                    <a class="btn btn-primary" type="button" asp-controller="Aluno" asp-action="Buscarcep" asp-route-cep="88353-529">Endereço</a>
+                </div>
+                </td>
             </tr>
             <tr>
                 <th scope="row">2</th>
@@ -34,8 +44,13 @@
                 <td>(48) 98440-6456</td>
                 <td>ruan.secati@gmail.com</td>
                 <td>88230-000</td>
-                <td><button type="button" class="btn-outline-primary">Endereço</button></td>
+                <td>
+                    <div>
+                      <a class="btn btn-primary" type="button" asp-controller="Aluno" asp-action="Buscarcep" asp-route-cep="88230-000">Endereço</a>
+                    </div>
+                </td>
             </tr>
+
             <tr>
                 <th scope="row">3</th>
                 <td>Pedro Haniel </td>
@@ -43,7 +58,11 @@
                 <td>(47) 98809-2450</td>
                 <td>pedrohhaniel@gmail.com</td>
                 <td>88351-010</td>
-                <td><button type="button" class="btn-outline-primary">Endereço</button></td>
+                <td>
+                    <div>
+                      <a class="btn btn-primary" type="button" asp-controller="Aluno" asp-action="Buscarcep" asp-route-cep="88351-010">Endereço</a>
+                    </div>
+                </td>
             </tr>
 
 
