@@ -60,12 +60,13 @@ namespace JovemProgramadorMvc.Controllers
                 }
                 else
                 {
-                    
+                    ViewData["Mensagem"] = " Erro na busca do endereço!";
+                    return View("Index");
                 }
             }
             catch (Exception e)
             {
-
+                _ = ViewData["Mensagem"] + "Erro" + e + "na requisição";
             }
             
             return View("Buscarcep", enderecoModel);
