@@ -6,7 +6,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Text.Json;
+
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+
 
 namespace JovemProgramadorMvc.Controllers
 {
@@ -45,6 +48,23 @@ namespace JovemProgramadorMvc.Controllers
                 {
                     enderecoModel = JsonSerializer.Deserialize<EnderecoModel> (
                         await result.Content.ReadAsStringAsync(), new JsonSerializerOptions() { });
+
+                    if (enderecoModel.complemento == "")
+                    {
+                        enderecoModel.complemento = "Sem complemento";
+                    }
+                    
+                    if (Regex.IsMatch(cep,(@"000")) == true)
+                    {
+                        enderecoModel.logradouro = "CEP geral de " + enderecoModel.localidade;
+                        enderecoModel.bairro = "Não especificado";
+                    }
+                }
+                else
+                {
+                    ViewData["Mensagem"] = "Erro na busca do endereço!";
+                    return View("Index");
+
                 }
             }
             catch (Exception e)
