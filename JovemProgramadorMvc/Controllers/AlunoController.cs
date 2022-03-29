@@ -1,4 +1,5 @@
-﻿using JovemProgramadorMvc.Models;
+﻿using JovemProgramadorMvc.Data.Repositório.Interfaces;
+using JovemProgramadorMvc.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using System;
@@ -16,11 +17,12 @@ namespace JovemProgramadorMvc.Controllers
     public class AlunoController : Controller 
     {
         private readonly IConfiguration _configuration;
+        private readonly IAlunoRepositorio _alunorepositorio;
         
-        
-        public AlunoController(IConfiguration configuration)
+        public AlunoController(IConfiguration configuration, IAlunoRepositorio alunoRepositorio)
         {
             _configuration = configuration;
+            _alunorepositorio = alunoRepositorio;
         }
         public IActionResult Index()
         {
@@ -62,6 +64,7 @@ namespace JovemProgramadorMvc.Controllers
                 }
                 else
                 {
+
                     ViewData["Mensagem"] = " Erro na busca do endereço!";
                     return View("Index");
                 }
@@ -72,6 +75,12 @@ namespace JovemProgramadorMvc.Controllers
             }
             
             return View("Buscarcep", enderecoModel);
+        }
+
+        public IActionResult Inserir(AlunoModel aluno)
+        {
+            _alunorepositorio.Inserir(aluno);
+            return RedirectToAction("Index");
         }
     }
 }
