@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Text.Json;
+
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
@@ -47,6 +48,7 @@ namespace JovemProgramadorMvc.Controllers
                 {
                     enderecoModel = JsonSerializer.Deserialize<EnderecoModel> (
                         await result.Content.ReadAsStringAsync(), new JsonSerializerOptions() { });
+
                     if (enderecoModel.complemento == "")
                     {
                         enderecoModel.complemento = "Sem complemento";
