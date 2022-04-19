@@ -1,12 +1,11 @@
-﻿@if(ViewData["Mensagem"] != null)
-            {
-                <div class="alert-danger text-center">
-                    @ViewData["Mensagem"]
-                </div>
-            }
-
+﻿@model List<AlunoModel>
+@if (ViewData["Mensagem"] != null)
+{
+    <div class="alert-danger text-center">
+        @ViewData["Mensagem"]
+    </div>
+}
 <div class="text-left">
-
     <div>
         <h1>Dados dos Alunos</h1>
     </div>
@@ -19,58 +18,41 @@
                 <th scope="col">Contato</th>
                 <th scope="col">E-mail</th>
                 <th scope="col">CEP</th>
-              
-
             </tr>
         </thead>
         <tbody>
+            @if (Model != null && Model.Any())
+            {
+                foreach (AlunoModel aluno in Model)
+                {
             <tr>
-                <th scope="row">1</th>
-                <td>Matheus Henrique</td>
-                <td>17 anos</td>
-                <td>(47) 99208-8572</td>
-                <td>contato.theusp@gmail.com</td>
-                <td>88353-529</td>
-                <td>
-                <div>
-                    <a class="btn btn-primary" type="button" asp-controller="Aluno" asp-action="Buscarcep" asp-route-cep="88353-529">Endereço</a>
-                </div>
-                </td>
-            </tr>
-            <tr>
-                <th scope="row">2</th>
-                <td>Ruan Secati</td>
-                <td>21 anos</td>
-                <td>(48) 98440-6456</td>
-                <td>ruan.secati@gmail.com</td>
-                <td>88230-000</td>
+                <td> @aluno.Id</td>
+                <td> @aluno.Nome</td>
+                <td> @aluno.Idade anos</td>
+                <td> @aluno.Contato</td>
+                <td> @aluno.Email</td>
+                <td> @aluno.Cep</td>
                 <td>
                     <div>
-                      <a class="btn btn-primary" type="button" asp-controller="Aluno" asp-action="Buscarcep" asp-route-cep="88230-000">Endereço</a>
+                        <a class="btn btn-primary" type="button" asp-controller="Aluno" asp-action="Buscarcep" asp-route-cep="@aluno.Cep">Endereço</a>
+                    </div>
+                </td>
+                <td>
+                    <div>
+                        <a class="btn btn-primary" type="button" asp-controller="Aluno" asp-action="Editar" asp-route-Id="@aluno.Id">Editar</a>
+                    </div>
+                </td>
+                <td>
+                    <div>
+                        <a class="btn btn-primary" type="button" asp-controller="Aluno" asp-action="Excluir" asp-route-Id="@aluno.Id">Excluir</a>
                     </div>
                 </td>
             </tr>
-
-            <tr>
-                <th scope="row">3</th>
-                <td>Pedro Haniel </td>
-                <td>18 anos</td>
-                <td>(47) 98809-2450</td>
-                <td>pedrohhaniel@gmail.com</td>
-                <td>88351-010</td>
-                <td>
-                    <div>
-                      <a class="btn btn-primary" type="button" asp-controller="Aluno" asp-action="Buscarcep" asp-route-cep="88351-010">Endereço</a>
-                    </div>
-                </td>
-            </tr>
-
-
+                }
+            }
         </tbody>
     </table>
-
-        <div class="text-center">
-            <a class="btn btn-primary" type="button"asp-controller="Aluno" asp-action="Adicionar">Adicionar novo Aluno</a>
-        </div>
-
+    <div class="text-center">
+        <a class="btn btn-primary" type="button" asp-controller="Aluno" asp-action="Adicionar">Adicionar novo Aluno</a>
     </div>
+</div>

@@ -1,4 +1,5 @@
-﻿using JovemProgramadorMvc.Data.Repositório.Interfaces;
+﻿using JovemProgramadorMvc.Data;
+using JovemProgramadorMvc.Data.Repositório.Interfaces;
 using JovemProgramadorMvc.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -26,7 +27,8 @@ namespace JovemProgramadorMvc.Controllers
         }
         public IActionResult Index()
         {
-            return View();
+            var aluno = _alunorepositorio.BuscarAlunos();
+            return View(aluno);
         }
         public IActionResult Adicionar()
         {
@@ -83,8 +85,19 @@ namespace JovemProgramadorMvc.Controllers
             if(retorno != null)
             {
                 TempData["Mensagem2"] = "Dados gravados com sucesso!";
-                return RedirectToAction("index");
             }
+            return RedirectToAction("index");
+        }
+        public IActionResult Editar(int id)
+        {
+            var aluno = _alunorepositorio.BuscarId(id);
+            return View("Editar", aluno);
+        }
+        public IActionResult Atualizar(AlunoModel aluno)
+        {
+            var returno = _alunorepositorio.Atualizar(aluno);
+
+            return RedirectToAction("Index");
         }
     }
 }
