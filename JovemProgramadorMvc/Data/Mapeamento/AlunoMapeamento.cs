@@ -17,14 +17,14 @@ namespace JovemProgramadorMvc.Data.Mapeamento
 
 
             builder.HasKey(t => t.Id);
-
+            //oi
 
 
             builder.Property(t => t.Nome).HasColumnType("varchar(50)");
             builder.Property(t => t.Idade).HasColumnType("int");
             builder.Property(t => t.Contato).HasColumnType("varchar(50)");
             builder.Property(t => t.Email).HasColumnType("varchar(50)");
-            builder.Property(t => t.Cep).HasColumnType("varchar(10)");
+            builder.Property(t => t.Cep).HasColumnType("varchar(9)");
 
 
 
