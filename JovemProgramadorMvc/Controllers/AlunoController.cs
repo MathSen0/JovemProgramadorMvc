@@ -95,9 +95,24 @@ namespace JovemProgramadorMvc.Controllers
         }
         public IActionResult Atualizar(AlunoModel aluno)
         {
-            var returno = _alunorepositorio.Atualizar(aluno);
+            var retorno = _alunorepositorio.Atualizar(aluno);
+            if (retorno == true)
+                TempData["Mensagem4"] = "Dados alterados com sucesso";
+            else
+                TempData["Mensagem4"] = "Não foi possivel alterar os dados do aluno!";
 
             return RedirectToAction("Index");
+        }
+        public IActionResult Excluir(int Id)
+        {
+            var retorno = _alunorepositorio.Excluir(Id);
+            if (retorno != false)
+                TempData["Mensagem3"] = "Aluno excluido com sucesso!";
+            else
+                TempData["Mensagem3"] = "Não foi possivel excluir o aluno";
+
+            return RedirectToAction("Index");
+            
         }
     }
 }
