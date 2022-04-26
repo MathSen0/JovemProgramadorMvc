@@ -95,6 +95,7 @@ namespace JovemProgramadorMvc.Controllers
         }
         public IActionResult Atualizar(AlunoModel aluno)
         {
+
             var retorno = _alunorepositorio.Atualizar(aluno);
             if (retorno == true)
                 TempData["Mensagem4"] = "Dados alterados com sucesso";
@@ -113,6 +114,11 @@ namespace JovemProgramadorMvc.Controllers
 
             return RedirectToAction("Index");
             
+
+            var returno = _alunorepositorio.Atualizar(aluno)
+
+            return RedirectToAction("Index");
+
         }
     }
 }
