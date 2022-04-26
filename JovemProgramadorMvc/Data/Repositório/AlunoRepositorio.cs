@@ -50,6 +50,7 @@ namespace JovemProgramadorMvc.Data.Repositório
             return true;
         }
 
+
         public bool Excluir(int Id)
         {
             AlunoModel aluno = BuscarId(Id);
@@ -67,6 +68,5 @@ namespace JovemProgramadorMvc.Data.Repositório
         {
             return _bancoContexto.Aluno.Where(x => x.Idade == idade).ToList();
         }
-
     }
 }
