@@ -1,11 +1,9 @@
-﻿using JovemProgramadorMvc.Data;
-using JovemProgramadorMvc.Data.Repositório.Interfaces;
+﻿using JovemProgramadorMvc.Data.Repositório.Interfaces;
 using JovemProgramadorMvc.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Text.Json;
 
@@ -15,20 +13,29 @@ using System.Threading.Tasks;
 
 namespace JovemProgramadorMvc.Controllers
 {
-    public class AlunoController : Controller 
+    public class AlunoController : Controller
     {
         private readonly IConfiguration _configuration;
         private readonly IAlunoRepositorio _alunorepositorio;
-        
+
         public AlunoController(IConfiguration configuration, IAlunoRepositorio alunoRepositorio)
         {
             _configuration = configuration;
             _alunorepositorio = alunoRepositorio;
         }
-        public IActionResult Index()
+        public IActionResult Index(AlunoModel FiltroAluno)
         {
-            var aluno = _alunorepositorio.BuscarAlunos();
+            List<AlunoModel> aluno = new();
+            if (FiltroAluno.Idade > 0)
+            {
+                aluno = _alunorepositorio.FiltroIdade(FiltroAluno.Idade);
+            }
+            else
+            {
+                aluno = _alunorepositorio.BuscarAlunos();
+            }
             return View(aluno);
+
         }
         public IActionResult Adicionar()
         {
@@ -48,17 +55,17 @@ namespace JovemProgramadorMvc.Controllers
 
                 using var client = new HttpClient();
                 var result = await client.GetAsync(_configuration.GetSection("ApiCep")["BaseUrl"] + cep + "/json");
-                if(result.IsSuccessStatusCode)
+                if (result.IsSuccessStatusCode)
                 {
-                    enderecoModel = JsonSerializer.Deserialize<EnderecoModel> (
+                    enderecoModel = JsonSerializer.Deserialize<EnderecoModel>(
                         await result.Content.ReadAsStringAsync(), new JsonSerializerOptions() { });
 
                     if (enderecoModel.complemento == "")
                     {
                         enderecoModel.complemento = "Sem complemento";
                     }
-                    
-                    if (Regex.IsMatch(cep,(@"000")) == true)
+
+                    if (Regex.IsMatch(cep, (@"000")) == true)
                     {
                         enderecoModel.logradouro = "CEP geral de " + enderecoModel.localidade;
                         enderecoModel.bairro = "Não especificado";
@@ -75,14 +82,14 @@ namespace JovemProgramadorMvc.Controllers
             {
                 _ = ViewData["Mensagem"] + "Erro" + e + "na requisição";
             }
-            
+
             return View("Buscarcep", enderecoModel);
         }
 
         public IActionResult Inserir(AlunoModel aluno)
         {
             var retorno = _alunorepositorio.Inserir(aluno);
-            if(retorno != null)
+            if (retorno != null)
             {
                 TempData["Mensagem2"] = "Dados gravados com sucesso!";
             }
@@ -113,13 +120,6 @@ namespace JovemProgramadorMvc.Controllers
                 TempData["Mensagem3"] = "Não foi possivel excluir o aluno";
 
             return RedirectToAction("Index");
-            
-
-            var returno = _alunorepositorio.Atualizar(aluno)
-
-            return RedirectToAction("Index");
-
         }
     }
 }
-        

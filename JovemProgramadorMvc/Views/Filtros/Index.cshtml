@@ -1,0 +1,11 @@
+﻿@model AlunoModel
+
+<form asp-controller="Aluno" asp-action="Index" method="post">
+    <div class="mb-3">
+        <label for="Name" class="form-label">Idade igual á</label>
+        <input type="text" asp-for="Idade" class="form-control col-1" required />
+    </div>
+    <div class="text-left">
+        <button type="submit" class="btn btn-primary">Filtrar</button>
+    </div>
+</form>

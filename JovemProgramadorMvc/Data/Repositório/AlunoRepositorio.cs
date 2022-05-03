@@ -64,7 +64,7 @@ namespace JovemProgramadorMvc.Data.Repositório
             return true;
         }
 
-        public List<AlunoModel> FiltroIdade(int idade)
+        public List<AlunoModel> FiltroAluno(int idade)
         {
             return _bancoContexto.Aluno.Where(x => x.Idade == idade).ToList();
         }
