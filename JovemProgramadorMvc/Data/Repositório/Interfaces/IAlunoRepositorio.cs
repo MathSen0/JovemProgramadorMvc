@@ -17,7 +17,15 @@ namespace JovemProgramadorMvc.Data.Repositório.Interfaces
         bool Atualizar(AlunoModel aluno);
 
         bool Excluir(int Id);
-        List<AlunoModel> FiltroIdade(int idade);
 
+        List<AlunoModel> FiltroMaiorIdade(int idade);
+
+        List<AlunoModel> FiltroigualIdade(int idade);
+
+        List<AlunoModel> FiltroMenorIdade(int idade);
+
+        List<AlunoModel> FiltroNome(string nome);
+
+        List<AlunoModel> FiltroContato(string contato);
     }
 }

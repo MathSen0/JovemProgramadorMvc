@@ -26,13 +26,20 @@ namespace JovemProgramadorMvc.Controllers
         public IActionResult Index(AlunoModel FiltroAluno)
         {
             List<AlunoModel> aluno = new();
+
+                aluno = _alunorepositorio.BuscarAlunos();
+
             if (FiltroAluno.Idade > 0)
             {
-                aluno = _alunorepositorio.FiltroIdade(FiltroAluno.Idade);
+                aluno = _alunorepositorio.FiltroigualIdade(FiltroAluno.Idade);
             }
-            else
+            if (FiltroAluno.Nome != null)
             {
-                aluno = _alunorepositorio.BuscarAlunos();
+                aluno = _alunorepositorio.FiltroNome(FiltroAluno.Nome);
+            }
+            if(FiltroAluno.Contato != null)
+            {
+                aluno = _alunorepositorio.FiltroContato(FiltroAluno.Contato);
             }
             return View(aluno);
 
