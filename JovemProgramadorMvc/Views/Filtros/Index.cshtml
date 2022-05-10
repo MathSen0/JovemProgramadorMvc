@@ -3,17 +3,26 @@
 <form asp-controller="Aluno" asp-action="Index" method="post">
     <div class="mb-3">
         <label for="Name" class="form-label">Filtrar por nome:</label>
-        <input type="text" asp-for="Nome" class="form-control col-4" /><br />
+        <input type="text" asp-for="Nome" class="form-control col-4" />
     </div>
   
     <div class="mb-3">
         <label for="Idade" class="col-form-label">Idade será</label>
-            <label><input type="number" asp-for="Idade" class="form-control col-3" id="InputFiltroIdade"></label> anos<br />
+        <input type="number" asp-for="Idade" class="form-control col-2" id="InputFiltroIdade"> anos<br />
 
         <label>Qual filtro deseja aplicar a idade?</label><br />
-        <input type="radio" name="Idade" value="maior" /> Maior que<br />
-        <input type="radio" name="Idade" value="igual" /> igual<br />
-        <input type="radio" name="Idade" value="menor" /> Menor que<br />
+
+        <select class="form-select"  asp-for="Operacao">
+            <option value="1">Maior que</option>
+            <option value="2">Igual que</option>
+            <option value="3">Menor que</option>
+        </select>
+
+    @*<div  >
+        <input asp-for="Operacao" type="radio" name="Idade" value=""1"" /> Maior que<br />
+        <input asp-for="Operacao" type="radio" name="Idade" value=""2"" /> Igual que<br />
+        <input asp-for="Operacao" type="radio" name="Idade" value=""3"" /> Menor que<br />
+    </div>*@
     </div>
    
     <div class="mb-3">
@@ -25,4 +34,6 @@
         <button type="submit" class="btn btn-primary">Filtrar</button>
     </div>
 </form>
+
+
 

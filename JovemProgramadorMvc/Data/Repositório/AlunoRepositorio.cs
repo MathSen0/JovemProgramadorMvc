@@ -64,19 +64,25 @@ namespace JovemProgramadorMvc.Data.Repositório
             return true;
         }
 
-        public List<AlunoModel> FiltroMaiorIdade(int idade)
+        public List<AlunoModel> FiltroIdade(int idade, string operacao)
         {
-            return _bancoContexto.Aluno.Where(x => x.Idade > idade).ToList();
-        }
+            switch (operacao)
+            {
 
-        public List<AlunoModel> FiltroigualIdade(int idade)
-        {
-            return _bancoContexto.Aluno.Where(x => x.Idade == idade).ToList();
-        }
+                case "1":
+                    return _bancoContexto.Aluno.Where(x => x.Idade > idade).ToList();
+                case "2":
+                    return _bancoContexto.Aluno.Where(x => x.Idade == idade).ToList();
+                case "3":
+                    return _bancoContexto.Aluno.Where(x => x.Idade < idade).ToList();
 
-        public List<AlunoModel> FiltroMenorIdade(int idade)
-        {
-            return _bancoContexto.Aluno.Where(x => x.Idade < idade).ToList();
+            }
+            //if(operacao1 =="1")
+            //{
+            //    return _bancoContexto.Aluno.Where(x => x.Idade > idade).ToList();
+            //}
+
+            return null;
         }
 
         public List<AlunoModel> FiltroNome(string nome)

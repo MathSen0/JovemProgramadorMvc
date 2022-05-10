@@ -31,7 +31,7 @@ namespace JovemProgramadorMvc.Controllers
 
             if (FiltroAluno.Idade > 0)
             {
-                aluno = _alunorepositorio.FiltroigualIdade(FiltroAluno.Idade);
+               aluno = _alunorepositorio.FiltroIdade(FiltroAluno.Idade, FiltroAluno.Operacao);
             }
             if (FiltroAluno.Nome != null)
             {
@@ -67,15 +67,15 @@ namespace JovemProgramadorMvc.Controllers
                     enderecoModel = JsonSerializer.Deserialize<EnderecoModel>(
                         await result.Content.ReadAsStringAsync(), new JsonSerializerOptions() { });
 
-                    if (enderecoModel.complemento == "")
+                    if (enderecoModel.Complemento == "")
                     {
-                        enderecoModel.complemento = "Sem complemento";
+                        enderecoModel.Complemento = "Sem complemento";
                     }
 
                     if (Regex.IsMatch(cep, (@"000")) == true)
                     {
-                        enderecoModel.logradouro = "CEP geral de " + enderecoModel.localidade;
-                        enderecoModel.bairro = "Não especificado";
+                        enderecoModel.Logradouro = "CEP geral de " + enderecoModel.Localidade;
+                        enderecoModel.Bairro = "Não especificado";
                     }
                 }
                 else
