@@ -17,7 +17,9 @@ namespace JovemProgramadorMvc.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new AlunoMapeamento());
+            modelBuilder.ApplyConfiguration(new EnderecoAlunoMapeamento());
         }
         public DbSet<AlunoModel> Aluno { get; set; }
+        public DbSet<EnderecoAlunoMapeamento> EnderecoAluno { get; set; }
     }
 }

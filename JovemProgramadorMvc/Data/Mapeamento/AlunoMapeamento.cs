@@ -17,8 +17,6 @@ namespace JovemProgramadorMvc.Data.Mapeamento
 
 
             builder.HasKey(t => t.Id);
-            //oi
-
 
             builder.Property(t => t.Nome).HasColumnType("varchar(50)");
             builder.Property(t => t.Idade).HasColumnType("int");

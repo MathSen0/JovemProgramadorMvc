@@ -17,11 +17,14 @@ namespace JovemProgramadorMvc.Controllers
     {
         private readonly IConfiguration _configuration;
         private readonly IAlunoRepositorio _alunorepositorio;
+        private readonly IEnderecoRepositorio _enderecorepositorio;
 
-        public AlunoController(IConfiguration configuration, IAlunoRepositorio alunoRepositorio)
+
+        public AlunoController(IConfiguration configuration, IAlunoRepositorio alunoRepositorio, IEnderecoRepositorio enderecoRepositorio)
         {
             _configuration = configuration;
             _alunorepositorio = alunoRepositorio;
+            _enderecorepositorio = enderecoRepositorio;
         }
         public IActionResult Index(AlunoModel FiltroAluno)
         {
@@ -52,16 +55,16 @@ namespace JovemProgramadorMvc.Controllers
         {
             return View();
         }
-        public async Task<IActionResult> BuscarCep(string cep)
+        public async Task<IActionResult> BuscarCep(AlunoModel aluno)
         {
             EnderecoModel enderecoModel = new();
 
             try
             {
-                cep = cep.Replace("-", "");
+                aluno.Cep = aluno.Cep.Replace("-", "");
 
                 using var client = new HttpClient();
-                var result = await client.GetAsync(_configuration.GetSection("ApiCep")["BaseUrl"] + cep + "/json");
+                var result = await client.GetAsync(_configuration.GetSection("ApiCep")["BaseUrl"] + aluno.Cep + "/json");
                 if (result.IsSuccessStatusCode)
                 {
                     enderecoModel = JsonSerializer.Deserialize<EnderecoModel>(
@@ -72,7 +75,7 @@ namespace JovemProgramadorMvc.Controllers
                         enderecoModel.Complemento = "Sem complemento";
                     }
 
-                    if (Regex.IsMatch(cep, (@"000")) == true)
+                    if (Regex.IsMatch(aluno.Cep, (@"000")) == true)
                     {
                         enderecoModel.Logradouro = "CEP geral de " + enderecoModel.Localidade;
                         enderecoModel.Bairro = "Não especificado";
@@ -91,6 +94,7 @@ namespace JovemProgramadorMvc.Controllers
             }
 
             return View("Buscarcep", enderecoModel);
+            var EnderecoAluno = _enderecorepositorio.InserirEndereco();
         }
 
         public IActionResult Inserir(AlunoModel aluno)

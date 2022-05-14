@@ -36,7 +36,7 @@
     <table class="table">
         <thead>
             <tr>
-                <th scope="col">#</th>
+                @*<th scope="col">#</th>*@
                 <th scope="col">Nome</th>
                 <th scope="col">Idade</th>
                 <th scope="col">Contato</th>
@@ -50,7 +50,7 @@
                 foreach (AlunoModel aluno in Model)
                 {
                     <tr>
-                        <td> @aluno.Id</td>
+                        @*<td> @aluno.Id</td>*@
                         <td> @aluno.Nome</td>
                         <td> @aluno.Idade anos</td>
                         <td> @aluno.Contato</td>
@@ -59,15 +59,7 @@
                         <td>
                             <div>
                                 <a class="btn btn-primary" type="button" asp-controller="Aluno" asp-action="Buscarcep" asp-route-cep="@aluno.Cep">Endereço</a>
-                            </div>
-                        </td>
-                        <td>
-                            <div>
                                 <a class="btn btn-primary" type="button" asp-controller="Aluno" asp-action="Editar" asp-route-Id="@aluno.Id">Editar</a>
-                            </div>
-                        </td>
-                        <td>
-                            <div>
                                 <a class="btn btn-danger" type="button" asp-controller="Aluno" asp-action="Excluir" asp-route-Id="@aluno.Id">Excluir</a>
                             </div>
                         </td>
