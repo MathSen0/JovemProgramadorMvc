@@ -19,12 +19,12 @@ namespace JovemProgramadorMvc.Data.Mapeamento
             builder.HasKey(t => t.Id);
 
             builder.Property(t => t.IdAluno).HasColumnType("int");
-            builder.Property(t => t.Logradouro).HasColumnType("varchar(200)");
-            builder.Property(t => t.Complemento).HasColumnType("varchar(200)");
-            builder.Property(t => t.Bairro).HasColumnType("varchar(50)");
-            builder.Property(t => t.Localidade).HasColumnType("varchar(50)");
-            builder.Property(t => t.Uf).HasColumnType("varchar(2)");
-            builder.Property(t => t.DDD).HasColumnType("varchar(3)");
+            builder.Property(t => t.logradouro).HasColumnType("varchar(200)");
+            builder.Property(t => t.complemento).HasColumnType("varchar(200)");
+            builder.Property(t => t.bairro).HasColumnType("varchar(50)");
+            builder.Property(t => t.localidade).HasColumnType("varchar(50)");
+            builder.Property(t => t.uf).HasColumnType("varchar(2)");
+            builder.Property(t => t.ddd).HasColumnType("varchar(3)");
 
         }
     }

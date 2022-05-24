@@ -94,5 +94,11 @@ namespace JovemProgramadorMvc.Data.Repositório
             return _bancoContexto.Aluno.Where(x => x.Contato.Contains(contato)).ToList();
         }
 
+        public EnderecoModel InserirEndereco(EnderecoModel endereco)
+        {
+            _bancoContexto.EnderecoAluno.Add(endereco);
+            _bancoContexto.SaveChanges();
+            return endereco;
+        }
     }
 }

@@ -17,14 +17,14 @@ namespace JovemProgramadorMvc.Controllers
     {
         private readonly IConfiguration _configuration;
         private readonly IAlunoRepositorio _alunorepositorio;
-        private readonly IEnderecoRepositorio _enderecorepositorio;
 
 
-        public AlunoController(IConfiguration configuration, IAlunoRepositorio alunoRepositorio, IEnderecoRepositorio enderecoRepositorio)
+
+        public AlunoController(IConfiguration configuration, IAlunoRepositorio alunoRepositorio)
         {
             _configuration = configuration;
             _alunorepositorio = alunoRepositorio;
-            _enderecorepositorio = enderecoRepositorio;
+
         }
         public IActionResult Index(AlunoModel FiltroAluno)
         {
@@ -55,46 +55,47 @@ namespace JovemProgramadorMvc.Controllers
         {
             return View();
         }
-        public async Task<IActionResult> BuscarCep(AlunoModel aluno)
+        public async Task<IActionResult> Buscarcep(AlunoModel aluno)
         {
+            var retorno = _alunorepositorio.BuscarId(aluno.Id);
+            aluno = retorno;
             EnderecoModel enderecoModel = new();
-
             try
             {
-                aluno.Cep = aluno.Cep.Replace("-", "");
-
+                var cep = aluno.Cep.Replace("-", "");
                 using var client = new HttpClient();
-                var result = await client.GetAsync(_configuration.GetSection("ApiCep")["BaseUrl"] + aluno.Cep + "/json");
+                var result = await client.GetAsync(_configuration.GetSection("ApiCep")["BaseUrl"] + cep + "/json");
                 if (result.IsSuccessStatusCode)
                 {
                     enderecoModel = JsonSerializer.Deserialize<EnderecoModel>(
                         await result.Content.ReadAsStringAsync(), new JsonSerializerOptions() { });
-
-                    if (enderecoModel.Complemento == "")
+                    if (enderecoModel.complemento == "")
                     {
-                        enderecoModel.Complemento = "Sem complemento";
+                        enderecoModel.complemento = "Nenhum";
+                    }
+                    enderecoModel.IdAluno = aluno.Id;
+
+                    
+                    if (Regex.IsMatch(cep, (@"000")) == true)
+                    {
+                        enderecoModel.logradouro = "CEP geral de " + enderecoModel.localidade;
+                        enderecoModel.bairro = "Não especificado";
                     }
 
-                    if (Regex.IsMatch(aluno.Cep, (@"000")) == true)
-                    {
-                        enderecoModel.Logradouro = "CEP geral de " + enderecoModel.Localidade;
-                        enderecoModel.Bairro = "Não especificado";
-                    }
+                    _alunorepositorio.InserirEndereco(enderecoModel);
                 }
                 else
                 {
-
-                    ViewData["Mensagem"] = " Erro na busca do endereço!";
+                    ViewData["Mensagem"] = "Erro na busca do endereço!";
                     return View("Index");
                 }
             }
             catch (Exception e)
             {
-                _ = ViewData["Mensagem"] + "Erro" + e + "na requisição";
+                ViewData["Mensagem"] = "Erro na requisição!";
+                return View("Index");
             }
-
-            return View("Buscarcep", enderecoModel);
-            var EnderecoAluno = _enderecorepositorio.InserirEndereco();
+            return View("BuscarCep", enderecoModel);
         }
 
         public IActionResult Inserir(AlunoModel aluno)

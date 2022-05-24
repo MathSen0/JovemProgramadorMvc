@@ -23,5 +23,7 @@ namespace JovemProgramadorMvc.Data.Repositório.Interfaces
         List<AlunoModel> FiltroNome(string nome);
 
         List<AlunoModel> FiltroContato(string contato);
+
+        EnderecoModel InserirEndereco(EnderecoModel endereco);
     }
 }

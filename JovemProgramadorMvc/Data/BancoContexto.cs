@@ -20,6 +20,6 @@ namespace JovemProgramadorMvc.Data
             modelBuilder.ApplyConfiguration(new EnderecoAlunoMapeamento());
         }
         public DbSet<AlunoModel> Aluno { get; set; }
-        public DbSet<EnderecoAlunoMapeamento> EnderecoAluno { get; set; }
+        public DbSet<EnderecoModel> EnderecoAluno { get; set; }
     }
 }
