@@ -46,6 +46,7 @@ namespace JovemProgramadorMvc.Controllers
             }
             return View(aluno);
 
+
         }
         public IActionResult Adicionar()
         {
