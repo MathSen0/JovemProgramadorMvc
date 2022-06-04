@@ -16,5 +16,9 @@ namespace JovemProgramadorMvc.Controllers
         {
             return View();
         }
+        public IActionResult Informacoes()
+        {
+            return View();
+        }
     }
 }

@@ -12,6 +12,24 @@ a {
     background-color: InactiveBorder;
 }
 
+#Container-imagem {
+    position: relative;
+    height: 100vh;
+    width: 100vw;
+    background-image: url(https://omunicipio.com.br/wp-content/uploads/2020/08/senac-brusque-web-1068x580-1068x580.jpg)
+    
+}
+
+.Informacoes {
+    font-weight: bold;
+}
+
+.btn-voltar {
+    color: white;
+    background-color: red;
+    border-color: darkred;
+}
+
 .btn-primary {
   color: forestgreen;
   background-color: aliceblue;
